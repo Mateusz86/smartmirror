@@ -1,0 +1,101 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container" *ngIf="weather">
+  <div class="row">
+    <div class="col-sm-12">
+      <!-- <h1>
+        {{ title }} application
+      </h1> -->
+      <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{ weather.name | uppercase }}</h4>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+      <div *ngIf="weather">
+        <!-- <h2>{{ weather.city.name | uppercase }}</h2>
+        <h3 *ngIf="weather.city.country && weather.city.country!='none'" class="card-title">{{ weather.city.country }}</h3> -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card__info">
+              <div class="row">
+                <div class="col-sm-12">
+                  <p class="card__temp ">{{ (weather.main.temp -273.15) |number }}
+                    <sup>&#x2103;</sup>
+                    <img class="pull-right card__figure" src="http://openweathermap.org/img/w/{{weather.weather[0].icon }}.png" alt="" />
+                  </p>
+                  <p class="card-bigger">
+                    ({{ (weather.main.temp_max-273.15) |number }} &#x2103; - {{ (weather.main.temp_min-273.15)
+                    |number}} &#x2103;)<br />
+                    {{weather.weather[0].description }}
+                  </p>
+                  <p class="card-smaller">
+                    <img src="../assets/img/gauge.svg" class="card-icon" />
+                    {{weather.main.pressure}} hPa
+                  </p>
+                  <p class="card-smaller">
+                    <img src="../assets/img/humidity.svg" class="card-icon" />{{weather.main.humidity}} %
+                  </p>
+                </div>
+                <!-- <div class="col-sm-6">
+                  <img class="card__figure" src="http://openweathermap.org/img/w/{{weather.list[0].weather[0].icon }}.png" alt="" />
+                </div> -->
+                <div class="col-sm-12">
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <!-- todo poprawic waurnek na wtaher -->
+      <div *ngIf="weather">
+        <div class="card">
+          <div class="card-body">
+            <div class="card__info">
+              <div class="row">
+                <div class="col-sm-12 text-right">
+                  <p class="card__temp">{{date|date:'H:mm'}}</p>
+                  <p class="card-bigger">
+                    {{date|date:'EEEE'}}<br />
+                    {{date|date:'MMMM d'}}
+                  </p>
+                  <p class="card-smaller" *ngIf="weather.wind.speed">
+                    <img src="../assets/img/breeze.svg" class="card-icon" />                    
+                    {{weather.wind.speed }} m/s
+                  </p>
+                  <p class="card-smaller" *ngIf="weather.wind.deg">
+                    <img src="../assets/img/signal.svg" class="card-icon" />
+                    {{weather.wind.deg }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <br/> 
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/> 
+            
+          </div>
+        </div>
+
+      </div>
+      <div *ngIf="!weather">
+        <h2>No weather data</h2>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12" style="background:#fff">
+        <canvas #myChart></canvas>
+    </div>
+
+  </div>
+
+</div>

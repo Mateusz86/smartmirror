@@ -1,0 +1,37 @@
+
+h1 {
+    margin-bottom: 20px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #eee;
+}
+.card{
+    color: #fff;
+
+    /* ten background tylko na portzbey zdaania, pozneij usunac;     */
+    background-color: #000;    
+}
+.card__info {
+    font-size: 1rem;
+}
+.card-title {
+    color: #FA8072;
+    font-size: 1.8rem;
+}
+.card__temp {
+    font-size: 40px;
+    font-size: 3.1rem;
+    /* margin-bottom: 0; */
+}
+.card__figure {
+    height: 5rem;
+}
+.card-icon {
+    width: 21px;
+    margin-right: 7px;
+}
+.card-bigger {
+    font-size: 1.2rem;
+}
+.card-smaller {
+    font-size: 0.9rem;
+}
