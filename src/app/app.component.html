@@ -1,20 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container" *ngIf="weather">
   <div class="row">
-    <div class="col-sm-12">
-      <!-- <h1>
-        {{ title }} application
-      </h1> -->
-      <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{ weather.name | uppercase }}</h4>
-          </div>
-        </div>
-    </div>
     <div class="col-sm-6">
       <div *ngIf="weather">
-        <!-- <h2>{{ weather.city.name | uppercase }}</h2>
-        <h3 *ngIf="weather.city.country && weather.city.country!='none'" class="card-title">{{ weather.city.country }}</h3> -->
         <div class="card">
           <div class="card-body">
             <div class="card__info">
@@ -74,14 +62,6 @@
                 </div>
               </div>
             </div>
-            <br/> 
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/> 
-            
           </div>
         </div>
 
