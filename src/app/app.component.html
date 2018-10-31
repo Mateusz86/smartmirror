@@ -1,82 +1,71 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div class="container" *ngIf="weather" id="main">
   <div class="row">
-    <div class="col-sm-6">
-      <div *ngIf="weather">
-        <div class="card">
-          <div class="card-body">
-            <div class="card__info">
-              <div class="row">
-                <div class="col-sm-12">
-                  <p class="card__temp ">{{ (weather.main.temp -273.15) |number }}
-                    <sup>&#x2103;</sup>
-                    <img class="pull-right card__figure"
-                         src="http://openweathermap.org/img/w/{{weather.weather[0].icon }}.png" alt=""/>
-                  </p>
-                  <p class="card-bigger">
-                    ({{ (weather.main.temp_max-273.15) |number }} &#x2103; - {{ (weather.main.temp_min-273.15)
-                    |number}} &#x2103;)<br/>
-                    {{weather.weather[0].description }}
-                  </p>
-                  <p class="card-smaller">
-                    <img src="../assets/img/gauge.svg" class="card-icon"/>
-                    {{weather.main.pressure}} hPa
-                  </p>
-                  <p class="card-smaller">
-                    <img src="../assets/img/humidity.svg" class="card-icon"/>{{weather.main.humidity}} %
-                  </p>
-                </div>
-                <!-- <div class="col-sm-6">
-                  <img class="card__figure" src="http://openweathermap.org/img/w/{{weather.list[0].weather[0].icon }}.png" alt="" />
-                </div> -->
-                <div class="col-sm-12">
-
-                </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="card__info">
+            <div class="row">
+              <div class="col-sm-12">
+                <p class="card__temp ">{{ (weather.main.temp -273.15) |number }}
+                  <sup>&#x2103;</sup>
+                  <img class="pull-right card__figure"
+                        src="http://openweathermap.org/img/w/{{weather.weather[0].icon }}.png" alt=""/>
+                </p>
+                <p class="card-bigger">
+                  ({{ (weather.main.temp_max-273.15) |number }} &#x2103; - {{ (weather.main.temp_min-273.15)
+                  |number}} &#x2103;)<br/>
+                  {{weather.weather[0].description }}
+                </p>
+                <p class="card-smaller">
+                  <img src="../assets/img/gauge.svg" class="card-icon"/>
+                  {{weather.main.pressure}} hPa
+                </p>
+                <p class="card-smaller">
+                  <img src="../assets/img/humidity.svg" class="card-icon"/>{{weather.main.humidity}} %
+                </p>
               </div>
-
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-6">
-      <!-- todo poprawic waurnek na wtaher -->
-      <div *ngIf="weather">
-        <div class="card">
-          <div class="card-body">
-            <div class="card__info">
-              <div class="row">
-                <div class="col-sm-12 text-right">
-                  <p class="card__temp">{{dateTime|date:'H:mm:ss'}}</p>
-                  <p class="card-bigger">
-                    {{dateTime|date:'EEEE'}}<br/>
-                    {{dateTime|date:'MMMM d'}}
-                  </p>
-                  <p class="card-smaller" *ngIf="weather.wind.speed">
-                    <img src="../assets/img/breeze.svg" class="card-icon"/>
-                    {{weather.wind.speed }} m/s
-                  </p>
-                  <p class="card-smaller" *ngIf="weather.wind.deg">
-                    <img src="../assets/img/signal.svg" class="card-icon"/>
-                    {{weather.wind.deg }}
-                  </p>
-                </div>
+    <div class="col-sm-2">
+      <div class="water-div" *ngIf="water">
+          <p class="card-smaller">High: {{ water.highValue }} m/s<br />
+            Low: {{ water.lowValue }} m/s<br />
+            Last: {{ water.item[this.water.item.length - 1].y }} m/s</p>
+      </div>
+    </div>
+    <div class="col-sm-4 offset-sm-2">
+      <div class="card">
+        <div class="card-body">
+          <div class="card__info">
+            <div class="row">
+              <div class="col-sm-12 text-right">
+                <p class="card__temp">{{dateTime|date:'H:mm:ss'}}</p>
+                <p class="card-bigger">
+                  {{dateTime|date:'EEEE'}}<br/>
+                  {{dateTime|date:'MMMM d'}}
+                </p>
+                <p class="card-smaller" *ngIf="weather.wind.speed">
+                  <img src="../assets/img/breeze.svg" class="card-icon"/>
+                  {{weather.wind.speed }} m/s
+                </p>
+                <p class="card-smaller" *ngIf="weather.wind.deg">
+                  <img src="../assets/img/signal.svg" class="card-icon"/>
+                  {{weather.wind.deg }}
+                </p>
               </div>
             </div>
           </div>
         </div>
-
-      </div>
-      <div *ngIf="!weather">
-        <h2>No weather data</h2>
       </div>
     </div>
-
-
     <div class="col-sm-12">
       <canvas #myChart height="300" width="1024"></canvas>
     </div>
-
   </div>
-
+</div>
+<div class="container" *ngIf="!weather">
+  <h2>No weather data</h2>
 </div>
