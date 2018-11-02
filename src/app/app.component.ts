@@ -53,7 +53,7 @@ export class AppComponent {
   /**
    * funkcia wywołuje sie rekurencyjnie pobierając dane
    */
-  private updateAllData(){
+  private updateAllData() {
     this.getData();
     setTimeout(() => {
       this.updateAllData();
@@ -87,12 +87,19 @@ export class AppComponent {
       // this.future_weather[i].dt_txt  -> wziac z tego godzine
       //this.datepipe.transform(this.future_weather[i].dt_txt, 'yyyy-MM-dd');
 
-      this.future_weather.list.forEach(element => {
-        this.temperatures.push(element.main.temp - 273);
-        if (element.rain) {
-          
 
-          // return (n+moveY)*finalAmplitude/amplitude;
+      let xLabel: any[];
+      xLabel = [];
+      let i = 0;
+      // array z tenparaturami
+
+      this.future_weather.list.forEach(element => {
+        const d = new Date(element.dt_txt);
+        xLabel.push(d.getDate() + '/' + d.getMonth() + ' ' + d.getHours() + ':00');
+
+        this.temperatures.push(element.main.temp - 273);
+
+        if (element.rain && element.rain['3h']) {
           this.rainfalls.push(element.rain['3h']);
         } else {
           this.rainfalls.push(0);
@@ -101,26 +108,71 @@ export class AppComponent {
 
       //array z godzinami
 
+      xLabel = xLabel.slice(0, 16);
+
+      console.log(this.rainfalls)
       this.context = (<HTMLCanvasElement>this.myChart.nativeElement).getContext('2d');
-      var weatherChart = new Chart(this.context, {
+      const weatherChart = new Chart(this.context, {
         type: 'bar',
         data: {
           datasets: [{
-            label: 'Temperature',
+            label: 'Temperatura',
             borderColor: 'green',
             fill: false,
-            data: this.temperatures.splice(0, 10),
-            type: 'line'
+            data: this.temperatures.splice(0, 16),
+            type: 'line',
+            yAxisID: 'y-axis-1'
           }, {
-            label: 'Rainfall',
+            label: 'Opady',
             borderColor: '#4682B4',
-            fill: false,
-            data: this.rainfalls.splice(0, 10),
-            type: 'line'
-          }
-          ],
-          labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            backgroundColor: '#4682B4',
+            fill: true,
+            data: this.rainfalls.splice(0, 16),
+            type: 'line',
+            yAxisID: 'y-axis-2'
+          }],
+          labels: xLabel
         },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              ticks: {
+                callback: function(dataLabel, index) {
+                  // Hide the label of every 2nd dataset. return null to hide the grid line too
+                  return index % 2 === 0 ? dataLabel : '';
+                }
+              }
+            }],
+            yAxes: [{
+              type: 'linear',
+              display: true,
+              position: 'left',
+              id: 'y-axis-1'
+              /*ticks: {
+                suggestedMin: -35,
+                suggestedMax: 35
+              }*/
+            }, {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              id: 'y-axis-2',
+              ticks: {
+                min: 0,
+                max: 10
+              },
+              // grid line settings
+              gridLines: {
+                drawOnChartArea: false, // only want the grid lines for one axis to show up
+              },
+            }],
+          }
+        }
+        // options: options
       });
     });
 

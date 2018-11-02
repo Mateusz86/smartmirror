@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
+import {DatePipe, registerLocaleData} from '@angular/common';
 
 
 import { AppComponent } from './app.component';
+
+import localePl from '@angular/common/locales/pl';
+registerLocaleData(localePl);
 
 
 @NgModule({
@@ -15,7 +18,10 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    { provide: LOCALE_ID, useValue: 'pl' },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
