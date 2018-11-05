@@ -3,6 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {HttpHeaders} from '@angular/common/http';
 import {DatePipe} from '@angular/common';
 import {Chart} from 'chart.js';
+import {OpenweatherImpService} from './service/openweatherImp.service';
+import {WetaherInterface} from './service/wetaher.interface';
+import {AccuWeatherImp} from './service/accuweatherImp.service';
 
 
 @Component({
@@ -23,16 +26,39 @@ export class AppComponent {
   temperatures: Array<any> = [];
   rainfalls: Array<any> = [];
 
+  private ww: WetaherInterface;
+
 
   @ViewChild('myChart') myChart: any;
   public context: CanvasRenderingContext2D;
 
 
   // na koncu poprzenosic
-  constructor(private http: HttpClient, public datepipe: DatePipe) {
+  constructor(private http: HttpClient,
+              public datepipe: DatePipe) {
   }
 
   ngOnInit(): void {
+
+    /**
+     *  tutaj korzystamy z  interface
+     */
+    const i = Math.random();
+    console.log(i);
+    if (i > 0.5) {
+      console.log('Openweather');
+      this.ww = new OpenweatherImpService(this.http);
+    } else {
+      console.log('AccuWeather');
+      this.ww = new AccuWeatherImp(this.http);
+    }
+
+
+    this.ww.getTemperature().subscribe((data: number) => {
+      console.log('T:');
+      console.log(data);
+    });
+
 
     //odswierzamy zergar co 1s
     this.updateDateTime();
@@ -71,7 +97,7 @@ export class AppComponent {
     this.formated_date = this.datepipe.transform(this.date, 'yyyy-MM-dd');
 
     this.http.get('http://mdrozdz6.webd.pl/mapa/wody/getData.php?st=1&dateFrom=' + this.formated_date).subscribe(data => {
-      console.log(data);
+        console.log(data);
         this.water = data[0];
       }
     );
@@ -110,7 +136,7 @@ export class AppComponent {
 
       xLabel = xLabel.slice(0, 16);
 
-      console.log(this.rainfalls)
+      console.log(this.rainfalls);
       this.context = (<HTMLCanvasElement>this.myChart.nativeElement).getContext('2d');
       const weatherChart = new Chart(this.context, {
         type: 'bar',
@@ -141,7 +167,7 @@ export class AppComponent {
             xAxes: [{
               display: true,
               ticks: {
-                callback: function(dataLabel, index) {
+                callback: function (dataLabel, index) {
                   // Hide the label of every 2nd dataset. return null to hide the grid line too
                   return index % 2 === 0 ? dataLabel : '';
                 }

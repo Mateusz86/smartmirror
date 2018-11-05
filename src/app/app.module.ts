@@ -7,6 +7,7 @@ import {DatePipe, registerLocaleData} from '@angular/common';
 import { AppComponent } from './app.component';
 
 import localePl from '@angular/common/locales/pl';
+import {OpenweatherImpService} from './service/openweatherImp.service';
 registerLocaleData(localePl);
 
 
@@ -20,7 +21,7 @@ registerLocaleData(localePl);
   ],
   providers: [
     DatePipe,
-    { provide: LOCALE_ID, useValue: 'pl' },
+    { provide: LOCALE_ID, useValue: 'pl' }
   ],
   bootstrap: [AppComponent]
 })
